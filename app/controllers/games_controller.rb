@@ -15,13 +15,13 @@ class GamesController < ApplicationController
     score = 0
     @message = ""
     word = params[:word]
-    # word_array = word.upcase.split("")
     word_array = word.upcase.split("")
     grid = params[:grid].split(" ")
     if grid_check?(word_array, grid)
       if is_word?(word)
         score = calculate_score(word)
-        @message = "Congratulations!! You scored #{score}"
+        session[:score] ? session[:score] += score : session[:score] = score
+        @message = "Congrats!! You scored #{score} this round. Running score = #{session[:score]}"
       else
         @message = "Not a valid english word"
       end
